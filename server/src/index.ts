@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import { graphqlHTTP } from "express-graphql";
 import { schema } from "./schema/schema";
+import connectDB from "./config/db";
+import { info } from "./chalk/chalk";
 
 dotenv.config();
 
@@ -17,8 +19,10 @@ app.use(
   })
 );
 
+connectDB();
+
 app.listen(port, () => {
   console.log(
-    `[api]: Server is running at http://localhost:${process.env.PORT}`
+    info(`[api]: Server is running at http://localhost:${process.env.PORT}`)
   );
 });
