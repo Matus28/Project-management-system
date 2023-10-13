@@ -1,4 +1,3 @@
-import mockdata from "../mockdata/sampleData";
 import {
   GraphQLID,
   GraphQLList,
@@ -6,8 +5,12 @@ import {
   GraphQLSchema,
   GraphQLString,
 } from "graphql";
+import { Project } from "../models/Project";
+import { Client } from "../models/Client";
 
-const { projects, clients } = mockdata;
+// MOCKED DATA -- Just for test
+// import mockdata from "../mockdata/sampleData";
+// const { projects, clients } = mockdata;
 
 // Project Type
 const ProjectType = new GraphQLObjectType({
@@ -20,7 +23,7 @@ const ProjectType = new GraphQLObjectType({
     client: {
       type: ClientType,
       resolve(parent, args) {
-        return clients.find((client) => client.id === parent.clientId);
+        return Client.findById(parent.clientId);
       },
     },
   }),
@@ -43,27 +46,27 @@ const RootQuery = new GraphQLObjectType({
     projects: {
       type: new GraphQLList(ProjectType),
       resolve(parent, args) {
-        return projects;
+        return Project.find();
       },
     },
     project: {
       type: ProjectType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
-        return projects.find((project) => project.id === args.id);
+        return Project.findById(args.id);
       },
     },
     clients: {
       type: new GraphQLList(ClientType),
       resolve(parent, args) {
-        return clients;
+        return Client.find();
       },
     },
     client: {
       type: ClientType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
-        return clients.find((client) => client.id === args.id);
+        return Client.findById(args.id);
       },
     },
   },
