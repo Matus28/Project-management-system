@@ -2,14 +2,14 @@ import mongoose, { ObjectId } from "mongoose";
 
 const Schema = mongoose.Schema;
 
-export interface Project {
+export interface ProjectType {
   name: string;
   description: string;
   status: string;
   clientId: ObjectId;
 }
 
-export const ProjectSchema = new Schema<Project>({
+export const ProjectSchema = new Schema<ProjectType>({
   description: {
     type: String,
     required: true,
@@ -26,4 +26,4 @@ export const ProjectSchema = new Schema<Project>({
   },
 });
 
-export const Project = mongoose.model<Project>("Project", ProjectSchema);
+export const Project = mongoose.model<ProjectType>("Project", ProjectSchema);
