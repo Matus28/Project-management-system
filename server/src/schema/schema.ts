@@ -1,12 +1,13 @@
 import {
   GraphQLID,
   GraphQLList,
+  GraphQLNonNull,
   GraphQLObjectType,
   GraphQLSchema,
   GraphQLString,
 } from "graphql";
 import { Project } from "../models/Project";
-import { Client } from "../models/Client";
+import { Client, ClientType } from "../models/Client";
 
 // MOCKED DATA -- Just for test
 // import mockdata from "../mockdata/sampleData";
@@ -72,6 +73,32 @@ const RootQuery = new GraphQLObjectType({
   },
 });
 
+const mutation = new GraphQLObjectType({
+  name: "Mutation",
+  fields: {
+    addClient: {
+      type: ClientType,
+      args: {
+        name: { type: GraphQLNonNull(GraphQLString) },
+        email: { type: GraphQLNonNull(GraphQLString) },
+        phone: { type: GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parent, args) {
+        const client = new Client({
+          name: args.name,
+          email: args.email,
+          phone: args.phone,
+        });
+
+        return client.save();
+      },
+    },
+  },
+});
+
 export const schema = new GraphQLSchema({
   query: RootQuery,
+  // mutation: mutation
+  // I used shorter definition, because mutation:mutation
+  mutation,
 });
