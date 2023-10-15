@@ -1,0 +1,63 @@
+# mutation {
+#   addClient(name: "Test", email: "spiderman1@gmail.com", phone: "777-444-555") {
+#     id,
+#     name,
+#     email,
+#     phone
+#   }
+# }
+
+# mutation {
+#   deleteClient(id: "652b0938a68db748933f6105") {
+#     id,
+#     name,
+#     email,
+#     phone
+#   }
+# }
+
+# mutation {
+#   addProject(name: "eCommerce Website", description: "This is the description", status: progress, clientId: "652b070e8d24ad58a28e3001") {
+#     name,
+#     client {
+#       id,
+#       name
+#     }
+#   }
+# }
+
+# mutation {
+#   deleteProject(id:"652bfce09e5d2ed1b212b18d") {
+#     name,
+#     id
+#   }
+# }
+
+# mutation {
+#   updateProject(id: "652bfbaa9e5d2ed1b212b183", name: "Mobile Updated App", status:completed) {
+#     name,
+#     status
+#   }
+# }
+
+
+# {
+#   clients {
+#     id,
+#     name,
+#     email,
+#     phone
+#   }
+# } 
+
+# {
+#   projects {
+#     id,
+#     name,
+#     description,
+#     client {
+#       name,
+#       email
+#     }
+#   }
+# }
