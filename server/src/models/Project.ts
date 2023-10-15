@@ -10,6 +10,10 @@ export interface ProjectType {
 }
 
 export const ProjectSchema = new Schema<ProjectType>({
+  name: {
+    type: String,
+    required: true,
+  },
   description: {
     type: String,
     required: true,
