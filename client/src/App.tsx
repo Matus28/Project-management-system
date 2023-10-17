@@ -1,11 +1,12 @@
 import { Header } from "./components/Header/Header";
+import { Clients } from "./components/Clients/Clients";
 
 function App() {
   return (
     <>
       <Header />
       <div className="container">
-        <h1>Hello world!</h1>
+        <Clients />
       </div>
     </>
   );
