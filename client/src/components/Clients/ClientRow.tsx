@@ -15,6 +15,24 @@ interface GetClientsData {
 export const ClientRow = ({ client }: ClientRowProps): JSX.Element => {
   const [deleteClient] = useMutation(DELETE_CLIENT, {
     variables: { id: client.id },
+    // 2. option to rerender data
+    update(cache, { data: { deleteClient } }) {
+      const data = cache.readQuery<GetClientsData | null>({
+        query: GET_CLIENTS,
+      });
+
+      if (data) {
+        const { clients } = data;
+        cache.writeQuery({
+          query: GET_CLIENTS,
+          data: {
+            clients: clients.filter(
+              (client: Client) => client.id !== deleteClient.id
+            ),
+          },
+        });
+      }
+    },
   });
 
   const handleClickOnButton = (): void => {
@@ -22,23 +40,6 @@ export const ClientRow = ({ client }: ClientRowProps): JSX.Element => {
       variables: { id: client.id },
       // 1. option to rerender data
       // refetchQueries: [{ query: GET_CLIENTS }],
-      // 2. option to rerender data
-      update(cache, { data: { deleteClient } }) {
-        const data = cache.readQuery<GetClientsData | null>({
-          query: GET_CLIENTS,
-        });
-        if (data) {
-          const { clients } = data;
-          cache.writeQuery({
-            query: GET_CLIENTS,
-            data: {
-              clients: clients.filter(
-                (client: Client) => client.id !== deleteClient.id
-              ),
-            },
-          });
-        }
-      },
     });
   };
 
