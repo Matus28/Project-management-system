@@ -1,13 +1,19 @@
 import { Header } from "./components/Header/Header";
-import { Clients } from "./components/Clients/Clients";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Home from "./pages/Home";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+]);
 
 function App() {
   return (
     <>
       <Header />
-      <div className="container">
-        <Clients />
-      </div>
+      <RouterProvider router={router} />
     </>
   );
 }
