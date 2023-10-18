@@ -9,7 +9,7 @@ interface GetClientsData {
   clients: Client[];
 }
 
-export const AddModalClient = (): JSX.Element => {
+export const AddClientModal = (): JSX.Element => {
   const [name, setName] = React.useState<string>("");
   const [email, setEmail] = React.useState<string>("");
   const [phone, setPhone] = React.useState<string>("");
