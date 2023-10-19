@@ -20,7 +20,7 @@ const ErrorPage = (): JSX.Element => {
   return (
     <div className="d-flex flex-column justify-content-center align-items-center mt-5">
       <FaExclamationTriangle className="text-danger" size="5em" />
-      <h1>404</h1>
+      <h1>{isRouteErrorResponse(error) ? `${error.status}` : 404}</h1>
       <p className="lead">Sorry, an unexpected error has occurred.</p>
       <p>
         <i>{errorMessage}</i>
