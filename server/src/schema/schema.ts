@@ -7,7 +7,7 @@ import {
   GraphQLSchema,
   GraphQLString,
 } from "graphql";
-import { Project } from "../models/Project";
+import { Project, ProjectType } from "../models/Project";
 import { Client, ClientType } from "../models/Client";
 
 // MOCKED DATA -- Just for test
@@ -101,8 +101,20 @@ const mutation = new GraphQLObjectType({
       args: {
         id: { type: GraphQLNonNull(GraphQLID) },
       },
-      resolve(parent, args) {
-        return Client.findByIdAndRemove(args.id);
+      async resolve(parent, args) {
+        try {
+          const projects = await Project.find({ clientId: args.id });
+
+          const deletionPromises = projects.map((project) => {
+            return Project.findByIdAndRemove(project._id);
+          });
+
+          await Promise.all(deletionPromises);
+
+          return Client.findByIdAndRemove(args.id);
+        } catch (error) {
+          throw new Error("Client could not be removed.");
+        }
       },
     },
     // Create a Project
